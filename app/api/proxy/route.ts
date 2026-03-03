@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-const BACKEND_URL = "http://13.203.232.46:8000";
+const BACKEND_URL = "https://api.recapca.com";
 
 export async function GET(req: NextRequest) {
   const path = req.nextUrl.pathname.replace("/api/proxy", "");
