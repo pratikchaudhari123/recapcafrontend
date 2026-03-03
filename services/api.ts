@@ -83,7 +83,7 @@ class ApiService {
   // Health check with error handling
   async healthCheck(): Promise<ApiResponse<{ status: string }>> {
     try {
-      return await this.request('/health');
+      return await this.request('/api/proxy/api/health');
     } catch (error) {
       return {
         data: { status: 'unavailable' },
@@ -95,7 +95,7 @@ class ApiService {
   // Study tracker endpoints with error handling
   async saveStudySession(session: StudySession): Promise<ApiResponse<StudySession>> {
     try {
-      return await this.request('/api/study-tracker/sessions', {
+      return await this.request('/api/proxy/api/study-tracker/sessions', {
         method: 'POST',
         body: JSON.stringify(session),
       });
@@ -110,7 +110,7 @@ class ApiService {
   async getStudySessions(userId?: string): Promise<ApiResponse<StudySession[]>> {
     try {
       const query = userId ? `?user_id=${userId}` : '';
-      return await this.request(`/api/study-tracker/sessions${query}`);
+      return await this.request(`/api/proxy/api/study-tracker/sessions${query}`);
     } catch (error) {
       return {
         data: [],
@@ -121,7 +121,7 @@ class ApiService {
 
   async deleteStudySession(sessionId: string): Promise<ApiResponse<{ success: boolean }>> {
     try {
-      return await this.request(`/api/study-tracker/sessions/${sessionId}`, {
+      return await this.request(`/api/proxy/api/study-tracker/sessions/${sessionId}`, {
         method: 'DELETE',
       });
     } catch (error) {
@@ -138,7 +138,7 @@ class ApiService {
     context?: string
   ): Promise<ApiResponse<{ answer: string; category?: string }>> {
     try {
-      return await this.request('/api/ask-question', {
+      return await this.request('/api/proxy/api/ask-question', {
         method: 'POST',
         body: JSON.stringify({ question, context }),
       });
@@ -156,7 +156,7 @@ class ApiService {
   async getChatHistory(userId?: string): Promise<ApiResponse<ChatMessage[]>> {
     try {
       const query = userId ? `?user_id=${userId}` : '';
-      return await this.request(`/api/chat/history${query}`);
+      return await this.request(`/api/proxy/api/chat/history${query}`);
     } catch (error) {
       return {
         data: [],
@@ -168,7 +168,7 @@ class ApiService {
   // Calculator endpoint with error handling
   async calculate(expression: string): Promise<ApiResponse<{ result: number }>> {
     try {
-      return await this.request('/api/calculator', {
+      return await this.request('/api/proxy/api/calculator', {
         method: 'POST',
         body: JSON.stringify({ expression }),
       });
@@ -183,7 +183,7 @@ class ApiService {
   async getCalculatorHistory(userId?: string): Promise<ApiResponse<{ history: any[] }>> {
     try {
       const query = userId ? `?user_id=${userId}` : '';
-      return await this.request(`/api/calculator/history${query}`);
+      return await this.request(`/api/proxy/api/calculator/history${query}`);
     } catch (error) {
       return {
         data: { history: [] },
@@ -194,7 +194,7 @@ class ApiService {
 
   async logCalculation(data: { expression: string; result: string }): Promise<ApiResponse<any>> {
     try {
-      return await this.request('/api/calculator/log', {
+      return await this.request('/api/proxy/api/calculator/log', {
         method: 'POST',
         body: JSON.stringify(data),
       });
@@ -215,7 +215,7 @@ class ApiService {
   }>> {
     try {
       const query = userId ? `?user_id=${userId}` : '';
-      return await this.request(`/api/progress${query}`);
+      return await this.request(`/api/proxy/api/progress${query}`);
     } catch (error) {
       return {
         data: {
@@ -235,7 +235,7 @@ class ApiService {
     name: string;
     firebaseUid: string;
   }): Promise<ApiResponse<{ id: string; email: string; name: string }>> {
-    return this.request('/api/users', {
+    return this.request('/api/proxy/api/users', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
@@ -247,7 +247,7 @@ class ApiService {
     name: string;
     createdAt: string;
   }>> {
-    return this.request(`/api/users/${userId}`);
+    return this.request(`/api/proxy/api/users/${userId}`);
   }
 
   // Subscription endpoints
@@ -268,7 +268,7 @@ class ApiService {
     }
 
     try {
-      console.log('📡 API: GET /api/subscription/status');
+      console.log('📡 API: GET /api/proxy/api/subscription/status');
       console.log('🔑 Token length:', token.length);
       
       const response = await this.request<{
@@ -280,7 +280,7 @@ class ApiService {
         total_questions_used: number;
         daily_limit: number | null;
         total_limit: number | null;
-      }>('/api/subscription/status', {
+      }>('/api/proxy/api/subscription/status', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -306,7 +306,7 @@ class ApiService {
     plans: Record<string, any>;
   }>> {
     try {
-      return await this.request('/api/subscription/plans');
+      return await this.request('/api/proxy/api/subscription/plans');
     } catch (error) {
       return {
         data: { plans: {} },
@@ -330,7 +330,7 @@ class ApiService {
     }
 
     try {
-      return await this.request('/api/subscription/check-limit', {
+      return await this.request('/api/proxy/api/subscription/check-limit', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -378,7 +378,7 @@ class ApiService {
       // Backend expects ONLY plan_type in body (matches CreateOrderRequest model)
       const payload = { plan_type: planType };
       
-      console.log('📡 API: POST /api/payment/create-order');
+      console.log('📡 API: POST /api/proxy/api/payment/create-order');
       console.log('📦 Payload:', payload);
       
       const response = await this.request<{
@@ -388,7 +388,7 @@ class ApiService {
         key_id: string;
         plan_type: string;
         plan_name: string;
-      }>('/api/payment/create-order', {
+      }>('/api/proxy/api/payment/create-order', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -437,7 +437,7 @@ class ApiService {
     }
 
     try {
-      return await this.request('/api/payment/verify', {
+      return await this.request('/api/proxy/api/payment/verify', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -468,7 +468,7 @@ class ApiService {
     }
 
     try {
-      return await this.request('/api/payment/history', {
+      return await this.request('/api/proxy/api/payment/history', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -486,7 +486,7 @@ class ApiService {
     message: string;
   }>> {
     try {
-      return await this.request('/api/payment/status');
+      return await this.request('/api/proxy/api/payment/status');
     } catch (error) {
       return {
         data: { configured: false, message: 'Service unavailable' },
