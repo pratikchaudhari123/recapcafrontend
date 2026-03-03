@@ -1,0 +1,137 @@
+========================================
+ 🚨 401 UNAUTHORIZED ERROR - FIX NOW
+========================================
+
+WHAT'S HAPPENING:
+-----------------
+Your frontend is sending a valid Firebase token, but the backend is rejecting it with 401 Unauthorized.
+
+Token Info from Logs:
+✅ Token EXISTS: true
+✅ Token length: 1144 characters  
+✅ User authenticated: uid '4zCjpjDKYoX332MYSM2hUkoNQyB2'
+
+❌ Backend response: 401 Unauthorized
+
+========================================
+ 🔍 ROOT CAUSE
+========================================
+
+The backend on EC2 is missing the Firebase service account file OR hasn't been restarted after adding it.
+
+Firebase token verification requires:
+1. ✅ Frontend Firebase config (you have this)
+2. ✅ Backend Firebase service account (you have this)
+3. ❌ Service account file on EC2 server (MISSING or not loaded)
+
+========================================
+ 🔧 THE FIX - RUN THIS ON EC2
+========================================
+
+SSH to your EC2 server:
+ssh -i your-key.pem ubuntu@13.203.232.46
+
+Then run these commands:
+
+# Go to backend directory
+cd /home/ubuntu/PRATIKRECAPCAAI-TOOL/BACKEND
+
+# Check if service account file exists
+ls -la firebase_service_account.json
+
+# If file is missing, you need to upload it from your local machine
+# The file is at: recap-ca-master/firebase_service_account.json
+
+# After file is in place, restart backend
+sudo systemctl restart recap-backend
+
+# Wait 5 seconds
+sleep 5
+
+# Check backend status
+sudo systemctl status recap-backend
+
+# Test backend
+curl https://api.recapca.com/health
+
+========================================
+ 📋 HOW TO UPLOAD SERVICE ACCOUNT FILE
+========================================
+
+From your local machine (Windows):
+
+Option 1: Use SCP (if you have it)
+-----------------------------------
+scp -i your-key.pem recap-ca-master/firebase_service_account.json ubuntu@13.203.232.46:/home/ubuntu/PRATIKRECAPCAAI-TOOL/BACKEND/
+
+Option 2: Copy-paste content
+-----------------------------
+1. On local machine, open: recap-ca-master/firebase_service_account.json
+2. Copy entire content
+3. SSH to EC2: ssh -i your-key.pem ubuntu@13.203.232.46
+4. Run: cd /home/ubuntu/PRATIKRECAPCAAI-TOOL/BACKEND
+5. Run: nano firebase_service_account.json
+6. Paste the content
+7. Save: Ctrl+X, then Y, then Enter
+
+Option 3: Use the fix script
+-----------------------------
+The fix script (🚨_FIX_401_ERROR_NOW.sh) in the main repo
+will create the file automatically if it's missing.
+
+========================================
+ ✅ VERIFY IT'S FIXED
+========================================
+
+After restarting backend, check logs:
+sudo journalctl -u recap-backend -n 50
+
+You should see:
+✅ "Firebase Admin SDK initialized with service account"
+✅ "Token verified successfully!"
+✅ No more "Token verification failed"
+
+========================================
+ 🎯 TEST YOUR APP
+========================================
+
+After fix:
+1. Clear browser cache (Ctrl+Shift+Delete)
+2. Hard refresh (Ctrl+F5)
+3. Test subscription page - should work!
+4. Test payment - should work!
+5. Test AI chat - should work!
+
+========================================
+ 📞 IF STILL NOT WORKING
+========================================
+
+1. Check backend logs:
+   sudo journalctl -u recap-backend -n 100
+
+2. Look for these errors:
+   - "Failed to initialize Firebase"
+   - "Token verification failed"
+   - "Service account file not found"
+
+3. Verify file exists and has correct content:
+   cat /home/ubuntu/PRATIKRECAPCAAI-TOOL/BACKEND/firebase_service_account.json | head -5
+
+4. Should show:
+   {
+     "type": "service_account",
+     "project_id": "recap-ca-ai",
+     ...
+
+========================================
+ 🎯 SUMMARY
+========================================
+
+Problem: Backend can't verify Firebase tokens
+Cause: Missing firebase_service_account.json on EC2
+Fix: Upload the file and restart backend
+Result: 401 errors will be gone!
+
+Your frontend is working perfectly. The backend just needs the service account file to verify tokens.
+
+========================================
