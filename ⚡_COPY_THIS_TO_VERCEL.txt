@@ -1,0 +1,52 @@
+========================================
+ ⚡ COPY THIS TO VERCEL - ONE BY ONE
+========================================
+
+Go to: Vercel Project > Settings > Environment Variables
+Add each variable below (8 total)
+
+========================================
+
+NEXT_PUBLIC_FIREBASE_API_KEY
+AIzaSyDtlT161nYDr93YrDm1VTxA-5RazmofQEg
+
+========================================
+
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+recap-ca-ai.firebaseapp.com
+
+========================================
+
+NEXT_PUBLIC_FIREBASE_PROJECT_ID
+recap-ca-ai
+
+========================================
+
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+recap-ca-ai.firebasestorage.app
+
+========================================
+
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+557093631304
+
+========================================
+
+NEXT_PUBLIC_FIREBASE_APP_ID
+1:557093631304:web:0fd976ab2e5f8e9134ef7d
+
+========================================
+
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+G-1KGQ58RPWC
+
+========================================
+
+NEXT_PUBLIC_RAZORPAY_KEY_ID
+rzp_live_SK39B8PUIHlAgO
+
+========================================
+
+✅ DONE! Now click "Redeploy" in Vercel
+
+========================================
