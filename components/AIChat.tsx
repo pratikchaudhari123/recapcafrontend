@@ -147,8 +147,8 @@ export default function AIChat() {
         token = await currentUser.getIdToken()
       }
 
-      // Call the backend API with auth header
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/ask-question`, {
+      // Call the backend API via proxy route
+      const response = await fetch('/api/proxy/api/ask-question', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
