@@ -1,0 +1,225 @@
+========================================
+ 🔥 VERCEL ENVIRONMENT VARIABLES
+========================================
+
+COPY AND PASTE THESE INTO VERCEL DASHBOARD
+
+========================================
+ METHOD 1: BULK IMPORT (RECOMMENDED)
+========================================
+
+1. Go to your Vercel project settings
+2. Click "Environment Variables"
+3. Click "Import .env" button
+4. Upload file: vercel-env-import.json
+5. All 8 variables will be imported automatically
+
+========================================
+ METHOD 2: MANUAL ENTRY (ONE BY ONE)
+========================================
+
+Copy each variable below and paste into Vercel:
+
+---
+
+Variable 1 of 8:
+Key: NEXT_PUBLIC_FIREBASE_API_KEY
+Value: AIzaSyDtlT161nYDr93YrDm1VTxA-5RazmofQEg
+Environment: Production, Preview, Development
+
+---
+
+Variable 2 of 8:
+Key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+Value: recap-ca-ai.firebaseapp.com
+Environment: Production, Preview, Development
+
+---
+
+Variable 3 of 8:
+Key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+Value: recap-ca-ai
+Environment: Production, Preview, Development
+
+---
+
+Variable 4 of 8:
+Key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+Value: recap-ca-ai.firebasestorage.app
+Environment: Production, Preview, Development
+
+---
+
+Variable 5 of 8:
+Key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+Value: 557093631304
+Environment: Production, Preview, Development
+
+---
+
+Variable 6 of 8:
+Key: NEXT_PUBLIC_FIREBASE_APP_ID
+Value: 1:557093631304:web:0fd976ab2e5f8e9134ef7d
+Environment: Production, Preview, Development
+
+---
+
+Variable 7 of 8:
+Key: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+Value: G-1KGQ58RPWC
+Environment: Production, Preview, Development
+
+---
+
+Variable 8 of 8:
+Key: NEXT_PUBLIC_RAZORPAY_KEY_ID
+Value: rzp_live_SK39B8PUIHlAgO
+Environment: Production, Preview, Development
+
+---
+
+========================================
+ METHOD 3: VERCEL CLI (ADVANCED)
+========================================
+
+If you have Vercel CLI installed:
+
+vercel env add NEXT_PUBLIC_FIREBASE_API_KEY production
+# Paste: AIzaSyDtlT161nYDr93YrDm1VTxA-5RazmofQEg
+
+vercel env add NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN production
+# Paste: recap-ca-ai.firebaseapp.com
+
+vercel env add NEXT_PUBLIC_FIREBASE_PROJECT_ID production
+# Paste: recap-ca-ai
+
+vercel env add NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET production
+# Paste: recap-ca-ai.firebasestorage.app
+
+vercel env add NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID production
+# Paste: 557093631304
+
+vercel env add NEXT_PUBLIC_FIREBASE_APP_ID production
+# Paste: 1:557093631304:web:0fd976ab2e5f8e9134ef7d
+
+vercel env add NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID production
+# Paste: G-1KGQ58RPWC
+
+vercel env add NEXT_PUBLIC_RAZORPAY_KEY_ID production
+# Paste: rzp_live_SK39B8PUIHlAgO
+
+========================================
+ METHOD 4: .env FORMAT (FOR REFERENCE)
+========================================
+
+If you need .env format for local testing:
+
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDtlT161nYDr93YrDm1VTxA-5RazmofQEg
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=recap-ca-ai.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=recap-ca-ai
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=recap-ca-ai.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=557093631304
+NEXT_PUBLIC_FIREBASE_APP_ID=1:557093631304:web:0fd976ab2e5f8e9134ef7d
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-1KGQ58RPWC
+NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_live_SK39B8PUIHlAgO
+
+Save as: .env.local (for local development)
+
+========================================
+ ⚠️ IMPORTANT NOTES
+========================================
+
+1. DO NOT ADD: NEXT_PUBLIC_API_URL
+   (Vercel proxy handles this automatically)
+
+2. Apply to ALL environments:
+   ✓ Production
+   ✓ Preview
+   ✓ Development
+
+3. After adding variables:
+   - Click "Save"
+   - Redeploy if already deployed
+
+4. Verify variables are set:
+   - Go to Project Settings
+   - Click "Environment Variables"
+   - Should see all 8 variables
+
+========================================
+ 🔍 VERIFICATION
+========================================
+
+After deployment, check browser console:
+
+console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY)
+// Should show: AIzaSyDtlT161nYDr93YrDm1VTxA-5RazmofQEg
+
+If undefined:
+1. Check variables are saved in Vercel
+2. Redeploy the project
+3. Clear browser cache
+
+========================================
+ 📋 QUICK CHECKLIST
+========================================
+
+Before deploying:
+□ All 8 variables added to Vercel
+□ Applied to Production, Preview, Development
+□ Saved changes
+□ No NEXT_PUBLIC_API_URL variable
+
+After deploying:
+□ Frontend loads without errors
+□ Firebase authentication works
+□ Razorpay payment modal opens
+□ No "undefined" in console for env vars
+
+========================================
+ 🆘 TROUBLESHOOTING
+========================================
+
+Problem: Variables not working
+Solution: 
+1. Check spelling (case-sensitive)
+2. Ensure "NEXT_PUBLIC_" prefix
+3. Redeploy after adding variables
+4. Check browser console for values
+
+Problem: Firebase not connecting
+Solution:
+1. Verify FIREBASE_API_KEY is correct
+2. Check FIREBASE_PROJECT_ID matches
+3. Verify all 7 Firebase variables are set
+
+Problem: Razorpay not working
+Solution:
+1. Verify RAZORPAY_KEY_ID is correct
+2. Check it starts with "rzp_live_"
+3. Ensure it's the KEY_ID not SECRET
+
+========================================
+ 📞 SUPPORT
+========================================
+
+Files in this folder:
+- vercel-env-import.json (for bulk import)
+- 🔥_COPY_PASTE_ENV_VARS.txt (this file)
+- VERCEL_ENV_VARIABLES.txt (detailed guide)
+
+Vercel Documentation:
+https://vercel.com/docs/environment-variables
+
+========================================
+ ✅ READY TO DEPLOY
+========================================
+
+Once all 8 variables are added:
+
+1. Go to Vercel dashboard
+2. Click "Deploy"
+3. Wait 2-3 minutes
+4. Test your application
+
+========================================

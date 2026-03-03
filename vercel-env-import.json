@@ -1,0 +1,42 @@
+[
+  {
+    "key": "NEXT_PUBLIC_FIREBASE_API_KEY",
+    "value": "AIzaSyDtlT161nYDr93YrDm1VTxA-5RazmofQEg",
+    "target": ["production", "preview", "development"]
+  },
+  {
+    "key": "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN",
+    "value": "recap-ca-ai.firebaseapp.com",
+    "target": ["production", "preview", "development"]
+  },
+  {
+    "key": "NEXT_PUBLIC_FIREBASE_PROJECT_ID",
+    "value": "recap-ca-ai",
+    "target": ["production", "preview", "development"]
+  },
+  {
+    "key": "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET",
+    "value": "recap-ca-ai.firebasestorage.app",
+    "target": ["production", "preview", "development"]
+  },
+  {
+    "key": "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID",
+    "value": "557093631304",
+    "target": ["production", "preview", "development"]
+  },
+  {
+    "key": "NEXT_PUBLIC_FIREBASE_APP_ID",
+    "value": "1:557093631304:web:0fd976ab2e5f8e9134ef7d",
+    "target": ["production", "preview", "development"]
+  },
+  {
+    "key": "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID",
+    "value": "G-1KGQ58RPWC",
+    "target": ["production", "preview", "development"]
+  },
+  {
+    "key": "NEXT_PUBLIC_RAZORPAY_KEY_ID",
+    "value": "rzp_live_SK39B8PUIHlAgO",
+    "target": ["production", "preview", "development"]
+  }
+]
