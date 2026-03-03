@@ -1,0 +1,57 @@
+========================================
+ VERCEL ENVIRONMENT VARIABLES
+========================================
+
+Copy and paste these into Vercel Dashboard:
+(Project Settings > Environment Variables)
+
+---
+
+NEXT_PUBLIC_FIREBASE_API_KEY
+AIzaSyDtlT161nYDr93YrDm1VTxA-5RazmofQEg
+
+---
+
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+recap-ca-ai.firebaseapp.com
+
+---
+
+NEXT_PUBLIC_FIREBASE_PROJECT_ID
+recap-ca-ai
+
+---
+
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+recap-ca-ai.firebasestorage.app
+
+---
+
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+557093631304
+
+---
+
+NEXT_PUBLIC_FIREBASE_APP_ID
+1:557093631304:web:0fd976ab2e5f8e9134ef7d
+
+---
+
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+G-1KGQ58RPWC
+
+---
+
+NEXT_PUBLIC_RAZORPAY_KEY_ID
+rzp_live_SK39B8PUIHlAgO
+
+---
+
+IMPORTANT NOTES:
+1. Add each variable separately in Vercel dashboard
+2. Apply to: Production, Preview, and Development
+3. DO NOT add NEXT_PUBLIC_API_URL (proxy handles this)
+4. Save after adding all variables
+5. Redeploy if already deployed
+
+========================================

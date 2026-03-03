@@ -1,0 +1,74 @@
+========================================
+ QUICK DEPLOY GUIDE - 3 STEPS
+========================================
+
+STEP 1: PUSH TO GITHUB
+-----------------------
+1. Open terminal in this folder (deploy-frontend)
+2. Run: PUSH_TO_GITHUB.bat
+3. Create GitHub repo: https://github.com/new
+   - Name: recap-ca-frontend
+   - Public or Private
+   - DO NOT initialize with README
+4. Copy repo URL and paste when prompted
+5. Wait for push to complete
+
+STEP 2: DEPLOY TO VERCEL
+-------------------------
+1. Go to: https://vercel.com/new
+2. Click "Import Git Repository"
+3. Select your new repository
+4. Vercel auto-detects Next.js ✓
+5. Add 8 environment variables:
+   (Copy from VERCEL_ENV_VARIABLES.txt)
+6. Click "Deploy"
+7. Wait 2-3 minutes for build
+
+STEP 3: TEST
+------------
+1. Visit your Vercel URL
+2. Test Login/Signup
+3. Test Subscription page
+4. Test AI Chat
+5. Test Payment system
+6. Check browser console (no errors)
+
+========================================
+ IMPORTANT NOTES
+========================================
+
+✓ Backend must be running: http://13.201.103.113
+✓ Add ALL 8 environment variables in Vercel
+✓ DO NOT add NEXT_PUBLIC_API_URL
+✓ Proxy handles API routing automatically
+
+========================================
+ TROUBLESHOOTING
+========================================
+
+Build Fails?
+- Check package.json has "next": "14.2.0"
+- Verify all 8 env variables are set
+- Check Vercel build logs
+
+API Calls Fail?
+- Verify EC2 backend is running
+- Check vercel.json proxy config
+- Verify env variables
+
+========================================
+ FILES TO READ
+========================================
+
+Quick Start:    START_HERE.md
+Full Guide:     DEPLOY_TO_VERCEL.md
+Env Variables:  VERCEL_ENV_VARIABLES.txt
+Project Info:   README.md
+
+========================================
+ READY TO DEPLOY?
+========================================
+
+Run: PUSH_TO_GITHUB.bat
+
+========================================

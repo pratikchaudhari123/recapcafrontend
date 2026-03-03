@@ -1,0 +1,308 @@
+========================================
+ DEPLOYMENT ARCHITECTURE
+========================================
+
+┌─────────────────────────────────────┐
+│         USER'S BROWSER              │
+│  https://your-app.vercel.app        │
+└─────────────┬───────────────────────┘
+              │
+              │ HTTPS
+              │
+┌─────────────▼───────────────────────┐
+│      VERCEL (Frontend Host)         │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │   Next.js Frontend          │   │
+│  │   - React Components        │   │
+│  │   - Firebase Auth           │   │
+│  │   - Razorpay Integration    │   │
+│  └─────────────────────────────┘   │
+│                                     │
+│  ┌─────────────────────────────┐   │
+│  │   Vercel Proxy              │   │
+│  │   /api/* → EC2 Backend      │   │
+│  └─────────────┬───────────────┘   │
+└────────────────┼───────────────────┘
+                 │
+                 │ HTTP (proxied)
+                 │
+┌────────────────▼───────────────────┐
+│   AWS EC2 (Backend Host)           │
+│   http://13.201.103.113            │
+│                                    │
+│  ┌─────────────────────────────┐  │
+│  │   FastAPI Backend           │  │
+│  │   - AI Service (OpenAI)     │  │
+│  │   - MongoDB Database        │  │
+│  │   - Payment Service         │  │
+│  │   - Subscription Service    │  │
+│  └─────────────────────────────┘  │
+└────────────────────────────────────┘
+
+========================================
+ HOW IT WORKS
+========================================
+
+1. USER VISITS FRONTEND
+   └─> https://your-app.vercel.app
+   └─> Vercel serves Next.js app
+
+2. USER LOGS IN
+   └─> Firebase Authentication
+   └─> Token stored in browser
+
+3. USER MAKES API CALL
+   └─> Frontend: fetch('/api/subscription/status')
+   └─> Vercel Proxy: http://13.201.103.113/api/subscription/status
+   └─> EC2 Backend: Processes request
+   └─> Response: Returns data
+   └─> Frontend: Displays data
+
+4. USER MAKES PAYMENT
+   └─> Frontend: Razorpay checkout
+   └─> Razorpay: Processes payment
+   └─> Frontend: Sends verification to /api/payment/verify
+   └─> Vercel Proxy: Routes to EC2
+   └─> EC2 Backend: Verifies and activates subscription
+   └─> Response: Success
+   └─> Frontend: Shows success message
+
+========================================
+ KEY COMPONENTS
+========================================
+
+FRONTEND (Vercel)
+├── Next.js 14.2.0
+├── React 18.2.0
+├── TypeScript 5.2.2
+├── Tailwind CSS 3.3.5
+├── Firebase Auth
+└── Razorpay Integration
+
+BACKEND (EC2)
+├── FastAPI
+├── Python 3.11
+├── MongoDB
+├── OpenAI API
+├── Razorpay API
+└── Firebase Admin
+
+PROXY (Vercel)
+└── Routes /api/* to EC2
+
+========================================
+ DATA FLOW EXAMPLES
+========================================
+
+EXAMPLE 1: Get Subscription Status
+-----------------------------------
+Browser → Vercel
+  GET /api/subscription/status
+  Headers: Authorization: Bearer <token>
+
+Vercel → EC2
+  GET http://13.201.103.113/api/subscription/status
+  Headers: Authorization: Bearer <token>
+
+EC2 → MongoDB
+  Query user subscription
+
+MongoDB → EC2
+  Return subscription data
+
+EC2 → Vercel
+  Response: { plan_type: "premium", is_active: true, ... }
+
+Vercel → Browser
+  Response: { plan_type: "premium", is_active: true, ... }
+
+Browser
+  Display subscription status
+
+
+EXAMPLE 2: AI Chat
+------------------
+Browser → Vercel
+  POST /api/ask-question
+  Body: { question: "What is CA?" }
+  Headers: Authorization: Bearer <token>
+
+Vercel → EC2
+  POST http://13.201.103.113/api/ask-question
+  Body: { question: "What is CA?" }
+  Headers: Authorization: Bearer <token>
+
+EC2 → OpenAI
+  Query with context from FAISS
+
+OpenAI → EC2
+  Return AI response
+
+EC2 → Vercel
+  Response: { answer: "CA stands for...", category: "general" }
+
+Vercel → Browser
+  Response: { answer: "CA stands for...", category: "general" }
+
+Browser
+  Display AI response in chat
+
+
+EXAMPLE 3: Payment
+------------------
+Browser → Razorpay
+  Create order
+
+Razorpay → Browser
+  Return order_id
+
+Browser → Vercel
+  POST /api/payment/create-order
+  Body: { plan_type: "premium" }
+  Headers: Authorization: Bearer <token>
+
+Vercel → EC2
+  POST http://13.201.103.113/api/payment/create-order
+  Body: { plan_type: "premium" }
+  Headers: Authorization: Bearer <token>
+
+EC2 → Razorpay
+  Create order
+
+Razorpay → EC2
+  Return order details
+
+EC2 → Vercel
+  Response: { order_id: "...", amount: 999, ... }
+
+Vercel → Browser
+  Response: { order_id: "...", amount: 999, ... }
+
+Browser → Razorpay
+  Show payment modal
+
+User → Razorpay
+  Complete payment
+
+Razorpay → Browser
+  Return payment_id, signature
+
+Browser → Vercel
+  POST /api/payment/verify
+  Body: { razorpay_order_id, razorpay_payment_id, razorpay_signature, plan_type }
+  Headers: Authorization: Bearer <token>
+
+Vercel → EC2
+  POST http://13.201.103.113/api/payment/verify
+  Body: { razorpay_order_id, razorpay_payment_id, razorpay_signature, plan_type }
+  Headers: Authorization: Bearer <token>
+
+EC2 → Razorpay
+  Verify signature
+
+EC2 → MongoDB
+  Update user subscription
+
+EC2 → Vercel
+  Response: { success: true, message: "Payment verified", ... }
+
+Vercel → Browser
+  Response: { success: true, message: "Payment verified", ... }
+
+Browser
+  Show success message, redirect to dashboard
+
+========================================
+ SECURITY
+========================================
+
+✓ HTTPS on frontend (Vercel)
+✓ Firebase token authentication
+✓ Razorpay signature verification
+✓ Environment variables secured
+✓ No API keys in frontend code
+✓ CORS handled by Vercel proxy
+✓ Rate limiting on backend
+
+========================================
+ SCALABILITY
+========================================
+
+Frontend (Vercel)
+├── Auto-scaling
+├── Global CDN
+├── Edge functions
+└── Serverless
+
+Backend (EC2)
+├── Nginx reverse proxy
+├── Systemd service
+├── MongoDB database
+└── Can scale to multiple instances
+
+========================================
+ MONITORING
+========================================
+
+Frontend
+├── Vercel Analytics
+├── Browser console
+└── Error tracking
+
+Backend
+├── EC2 logs: /var/log/recap-backend.log
+├── Nginx logs: /var/log/nginx/
+└── MongoDB logs
+
+========================================
+ COST BREAKDOWN
+========================================
+
+Vercel
+├── Free tier: 100GB bandwidth
+├── Hobby plan: $0/month
+└── Pro plan: $20/month (if needed)
+
+AWS EC2
+├── t2.micro: ~$8-10/month
+├── Storage: ~$1-2/month
+└── Bandwidth: ~$1-2/month
+
+MongoDB Atlas
+├── Free tier: 512MB
+└── Shared cluster: $0/month
+
+Firebase
+├── Free tier: 50K reads/day
+└── Spark plan: $0/month
+
+OpenAI
+├── Pay per use
+└── ~$0.002 per 1K tokens
+
+Razorpay
+├── 2% transaction fee
+└── No monthly fee
+
+TOTAL: ~$10-15/month (excluding OpenAI usage)
+
+========================================
+ DEPLOYMENT CHECKLIST
+========================================
+
+Backend (EC2)
+✓ Running on http://13.201.103.113
+✓ Nginx configured
+✓ Systemd service active
+✓ MongoDB connected
+✓ Environment variables set
+
+Frontend (Vercel)
+□ Push to GitHub
+□ Import to Vercel
+□ Add environment variables
+□ Deploy
+□ Test all features
+
+========================================
